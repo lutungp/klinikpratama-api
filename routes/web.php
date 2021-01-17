@@ -18,3 +18,9 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/user/login', 'AuthController@login');
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    // Matches "/api/register
+    $router->get('master/agama', 'AgamaController@getAgama');
+ 
+});
