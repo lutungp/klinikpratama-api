@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65d54e54251cff9268cf38be4955c8af",
+    "content-hash": "9f2403049729d5e10f49e0477a494e2b",
     "packages": [
         {
             "name": "brick/math",
@@ -4579,6 +4579,50 @@
                 }
             ],
             "time": "2020-12-16T17:02:19+00:00"
+        },
+        {
+            "name": "thedevsaddam/lumen-route-list",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thedevsaddam/lumen-route-list.git",
+                "reference": "198633b7e9c23a12290dbee80f4a4d011b855207"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thedevsaddam/lumen-route-list/zipball/198633b7e9c23a12290dbee80f4a4d011b855207",
+                "reference": "198633b7e9c23a12290dbee80f4a4d011b855207",
+                "shasum": ""
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Thedevsaddam\\LumenRouteList\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saddam Hossain",
+                    "email": "thedevsaddam@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Display all the registered route list like laravel",
+            "homepage": "https://github.com/thedevsaddam/lumen-route-list",
+            "keywords": [
+                "lumen",
+                "lumen routes list",
+                "lumen-route-list",
+                "route-list",
+                "routes",
+                "thedevsaddam"
+            ],
+            "abandoned": true,
+            "time": "2017-09-24T05:18:44+00:00"
         },
         {
             "name": "tymon/jwt-auth",
