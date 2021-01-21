@@ -50,8 +50,8 @@ class PasienController extends BaseController
         $data["pasien_norm2"]  = intval($data["pasien_norm"]);
         $data['pasien_created_by']    = \Auth::user()->name;
         $data['pasien_created_date']  = date("Y-m-d H:i:s");
-        $exe = $result = DB::table("m_pasien")->insert($data);
-
+        // $exe = $result = DB::table("m_pasien")->insert($data);
+        $exe = true;
         if ($exe) {
             $res["status"] = "success";
             $res["norm"] = $data["pasien_norm"];

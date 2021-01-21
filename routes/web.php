@@ -17,10 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('/user/login', 'AuthController@login');
-
 $router->group(['prefix' => 'api'], function () use ($router) {
-    // Matches "/api/register
+    $router->post('/user/login', 'AuthController@login');
     $router->get('master/agama', 'AgamaController@getAgama');
     $router->post('master/createpasien', 'PasienController@createPasien');
     
