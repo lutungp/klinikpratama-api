@@ -21,5 +21,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/user/login', 'AuthController@login');
     $router->get('master/agama', 'AgamaController@getAgama');
     $router->post('master/createpasien', 'PasienController@createPasien');
-    
+    $router->post('master/dokter', 'PegawaiController@getPegawaiAdmisi');
 });
