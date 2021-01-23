@@ -18,6 +18,7 @@ class PegawaiController extends BaseController
     public function getPegawaiAdmisi(Request $request)
     {
         $input = $request->only("unit_id", "tgl", "jam", "daftar_jenis", "search_pegawai", "pageSize");
+        
         $unit_id = isset($input["unit_id"]) ? $input["unit_id"] : 0;
         $tgl = isset($input["tgl"]) ? date("Y-m-d", strtotime($input["tgl"])) : "";
         $jam = isset($input["jam"]) ? $input["jam"] : "";
@@ -30,7 +31,7 @@ class PegawaiController extends BaseController
                 array_push($pegawai_idakses, $value->m_pegawai_id);
             }
         }
-        
+
         $select = [ "pegawai_id", "pegawai_nama","pegawai_namapanggilan","pegawai_no", "m_fungsional_id"];
 
         $search_pegawai = $input['search_pegawai'];

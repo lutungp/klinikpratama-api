@@ -76,4 +76,65 @@ class PasienController extends BaseController
         $newrm = str_pad(($nextrm), 8, "0", STR_PAD_LEFT );
         return $newrm;
     }
+
+    public function getPasien(Request $request)
+    {
+        $input = $request->only("search_pasien");
+        $search_pasien = isset($input['search_pasien']) ? $input['search_pasien'] : "";
+        try {
+            $select = ["pasien_id", "pasien_norm", "pasien_nama"];
+            $qpasien = DB::table("m_pasien")->select($select);
+
+            if ($search_pasien <> "") {
+                $qpasien = $qpasien->whereRaw("UPPER(pasien_nama) LIKE '".strtoupper($search_pasien)."%'");
+            }
+
+            
+            $respasien = $qpasien->where("m_pasien.pasien_aktif", "Y")
+                                        ->orderBy('m_pasien.pasien_nama', 'ASC')
+                                        ->limit(20)
+                                        ->get();
+                                        
+            $respasienId = array_column($respasien->toArray(), "pasien_id");
+            $respasienId = array_unique($respasienId);
+            $respasienQuotes = "'" . implode("', '", $respasienId) . "'";
+
+            $qdaftarexist = "   SELECT daftar_id, daftar_no, m_pasien_id, daftar_tanggal, m_pegawai.pegawai_nama
+                                FROM
+                                    t_pendaftaran
+                                JOIN m_pegawai ON m_pegawai.pegawai_id = t_pendaftaran.m_pegawai_id
+                                WHERE
+                                    t_pendaftaran.daftar_aktif = 'Y' 
+                                    AND t_pendaftaran.daftar_status != 'pulang' 
+                                    AND t_pendaftaran.m_pasien_id IN ($respasienQuotes)";
+
+            $resdaftarexist = DB::select($qdaftarexist);
+            
+            $datapasien = [];
+            foreach ($respasien as $key => $value) {
+                $pasien_id = $value->pasien_id;
+                $rdaftarexist = array_filter($resdaftarexist, function ($val) use ($pasien_id)
+                {
+                    return $val->m_pasien_id == $pasien_id;
+                });
+                $daftar = count($rdaftarexist) > 0 ? $rdaftarexist[0] : [];
+                $datapasien[] = [
+                    "pasien_id" => $pasien_id,
+                    "pasien_norm" => $value->pasien_norm,
+                    "pasien_nama" => $value->pasien_nama,
+                    "daftar_no" => empty($daftar) ? "" : "Sudah terdaftar " . date("d-m-Y", strtotime($daftar->daftar_tanggal)) . ", " . $daftar->daftar_no,
+                    "daftar_tanggal" => empty($daftar) ? "" : $daftar->daftar_tanggal,
+                    "pegawai_nama" => empty($daftar) ? "" : $daftar->pegawai_nama,
+                ];
+            }
+
+            $result["status"] = "success";
+            $result["datapasien"] = $datapasien;
+
+            return response()->json($result, 200);
+        } catch (\Throwable $th) {
+            $result["status"] = "failure";
+            return response()->json($result, 500);
+        }
+    }
 }

@@ -22,4 +22,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('master/agama', 'AgamaController@getAgama');
     $router->post('master/createpasien', 'PasienController@createPasien');
     $router->post('master/dokter', 'PegawaiController@getPegawaiAdmisi');
+    $router->post('master/pasien', 'PasienController@getPasien');
 });
